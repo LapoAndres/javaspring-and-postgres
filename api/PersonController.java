@@ -3,6 +3,9 @@ package com.example.demo.api;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +44,7 @@ public class PersonController {
 	}
 	
 	@PostMapping
-	public void addPerson(@RequestBody Person person) {
+	public void addPerson(@Valid @NonNull @RequestBody Person person) {
 		personService.addPerson(person);
 	}
 	
@@ -50,7 +53,7 @@ public class PersonController {
 		return personService.getAllPeople();
 	}
 	
-	@GetMapping(path= "/{id}")
+	@GetMapping(path= "{id}")
 	public Person getPersonById(@PathVariable("id") UUID id) {
 		return personService.getPersonById(id).orElse(null);
 	}
@@ -61,7 +64,7 @@ public class PersonController {
 	}
 	
 	@PutMapping(path = "{id}")
-	public void updatePerson(@PathVariable("id") UUID id, @RequestBody Person personToUpdate) {
+	public void updatePerson(@PathVariable("id") UUID id,@Valid @NonNull @RequestBody Person personToUpdate) {
 		personService.updatePerson(id, personToUpdate);
 	}
 }
